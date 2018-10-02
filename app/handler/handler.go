@@ -21,6 +21,13 @@ func GetContact(id string) Contact {
 	return c
 }
 
+// GetAll ...
+func GetAll() []Contact {
+	var c []Contact
+
+	return c
+}
+
 // EditContact ...
 func EditContact(c Contact) error {
 	return nil

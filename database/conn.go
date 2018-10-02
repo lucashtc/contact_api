@@ -11,7 +11,7 @@ type db struct {
 	db *sql.DB
 }
 
-func (d *db) conn() {
+func (d *db) Conn() {
 	db, err := sql.Open("mysql", "root:@/contact_api")
 	if err != nil {
 		log.Fatal(err)
