@@ -22,7 +22,7 @@ func (d *db) EditContact(c handler.Contact) error {
 	return nil
 }
 
-func (d *db) DeleteContact(id int) int {
+func (d *db) DeleteContact(id int) int64 {
 	d.Conn()
 	defer d.db.Close()
 
