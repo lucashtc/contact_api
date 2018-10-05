@@ -22,6 +22,18 @@ func (d *db) EditContact(c handler.Contact) error {
 	return nil
 }
 
-func (d *db) DeleteContact(id int) error {
-	return nil
+func (d *db) DeleteContact(id int) int {
+	d.Conn()
+	defer d.db.Close()
+
+	stmt, err := d.db.Prepare("DELETE user where id=?")
+	Check(err)
+
+	res, err := stmt.Exec(id)
+	Check(err)
+
+	qtd, err := res.RowsAffected()
+	Check(err)
+
+	return qtd
 }
