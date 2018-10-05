@@ -1,35 +1,32 @@
 package handler
 
-// Contact ...
-type Contact struct {
-	Number string
-	Person person
-}
+import (
+	"github.com/lucashtc/contact_api/app"
+	"github.com/lucashtc/contact_api/database"
+)
 
-type person struct {
-	Name string
-}
+var db database.db
 
 // Create contact ...
-func Create(c Contact) error {
+func Create(c app.Contact) error {
 	return nil
 }
 
 // GetContact ...
-func GetContact(id string) Contact {
+func GetContact(id string) app.Contact {
 	var c Contact
 	return c
 }
 
 // GetAll ...
-func GetAll() []Contact {
-	var c []Contact
+func GetAll() []app.Contact {
+	var c []app.Contact
 
 	return c
 }
 
 // EditContact ...
-func EditContact(c Contact) error {
+func EditContact(c app.Contact) error {
 	return nil
 }
 

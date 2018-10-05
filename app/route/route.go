@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/lucashtc/contact_api/app/handler"
 )
 
 // Routers ...
@@ -16,7 +15,7 @@ func Routers() {
 
 	srv := &http.Server{
 		Handler:      m,
-		Addr:         "127.0.0.1:80",
+		Addr:         "127.0.0.1:8080",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
