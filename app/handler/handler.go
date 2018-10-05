@@ -1,11 +1,16 @@
 package handler
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/lucashtc/contact_api/app"
 	"github.com/lucashtc/contact_api/database"
 )
 
-var db database.db
+var d struct {
+	database.Db
+}
 
 // Create contact ...
 func Create(c app.Contact) error {
@@ -14,7 +19,7 @@ func Create(c app.Contact) error {
 
 // GetContact ...
 func GetContact(id string) app.Contact {
-	var c Contact
+	var c app.Contact
 	return c
 }
 
@@ -31,6 +36,9 @@ func EditContact(c app.Contact) error {
 }
 
 // DeleteContact ...
-func DeleteContact() error {
-	return nil
+func DeleteContact(w http.ResponseWriter, r *http.Request) {
+	d.Conn()
+	result := d.DeleteContact(1)
+
+	fmt.Fprint(w, result)
 }

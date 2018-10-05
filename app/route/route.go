@@ -6,12 +6,14 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/lucashtc/contact_api/app/handler"
 )
 
 // Routers ...
 func Routers() {
 	m := mux.NewRouter().StrictSlash(true)
 	m.HandleFunc("/", handler.Index)
+	m.HandleFunc("/de", handler.DeleteContact)
 
 	srv := &http.Server{
 		Handler:      m,

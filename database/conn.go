@@ -7,11 +7,13 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type db struct {
+// Db ...
+type Db struct {
 	db *sql.DB
 }
 
-func (d *db) Conn() {
+// Conn connection database
+func (d *Db) Conn() {
 	db, err := sql.Open("mysql", "root:@/contact_api")
 	if err != nil {
 		log.Fatal(err)
