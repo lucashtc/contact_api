@@ -26,7 +26,7 @@ func (d *Db) EditContact(c app.Contact) error {
 	return nil
 }
 
-// DeleteContact ....
+// DeleteContact ...
 func (d *Db) DeleteContact(id int) (int64, error) {
 	d.Conn()
 	defer d.db.Close()
