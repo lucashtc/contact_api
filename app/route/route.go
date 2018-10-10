@@ -14,6 +14,7 @@ func Routers() {
 	m := mux.NewRouter().StrictSlash(true)
 	m.HandleFunc("/", handler.Index)
 	m.HandleFunc("/de", handler.DeleteContact)
+	m.HandleFunc("/cre", handler.Create)
 
 	srv := &http.Server{
 		Handler:      m,

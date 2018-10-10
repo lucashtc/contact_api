@@ -13,8 +13,17 @@ var d struct {
 }
 
 // Create contact ...
-func Create(c app.Contact) error {
-	return nil
+func Create(w http.ResponseWriter, r *http.Request) {
+	c := []app.Contact{}
+	c[1].Person.Name = "Alguem"
+	c[2].Person.Name = "Eu mesmo"
+
+	qtd, err := d.CreateContact(c)
+	if err != nil {
+		fmt.Printf("Error %v", err)
+	}
+
+	fmt.Fprintf(w, "resultado: '%d'", qtd)
 }
 
 // GetContact ...
@@ -37,8 +46,16 @@ func EditContact(c app.Contact) error {
 
 // DeleteContact ...
 func DeleteContact(w http.ResponseWriter, r *http.Request) {
-	d.Conn()
-	result := d.DeleteContact(1)
 
-	fmt.Fprint(w, result)
+	qtd, err := d.DeleteContact(4)
+	if err != nil {
+		fmt.Fprintf(w, "{status: %v}", err)
+	}
+
+	if qtd > 0 {
+		fmt.Fprintf(w, "{status:'Deletado => %v'}", qtd)
+	} else {
+		fmt.Fprintf(w, "{status: '%s'}", notDeleted)
+	}
+
 }

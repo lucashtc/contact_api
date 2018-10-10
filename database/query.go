@@ -1,6 +1,8 @@
 package database
 
 import (
+	"fmt"
+
 	"github.com/lucashtc/contact_api/app"
 )
 
@@ -17,8 +19,24 @@ func (d *Db) GetContact(id int) app.Contact {
 }
 
 // CreateContact ...
-func (d *Db) CreateContact(c app.Contact) error {
-	return nil
+func (d *Db) CreateContact(c []app.Contact) (int64, error) {
+	d.Conn()
+	d.VerifiqueConnection()
+	var qtdCreated int64
+	qtdCreated = 0
+
+	d.db.Prepare("INSERT INTO user(nome) VALUE(?)")
+
+	for _, v := range c {
+
+		res, err := d.db.Exec(v.Person.Name)
+		if err != nil {
+			return 0, fmt.Errorf("Falha ao inserir %v", err)
+		}
+		qtd, _ := res.RowsAffected()
+		qtdCreated += qtd
+	}
+	return qtdCreated, nil
 }
 
 // EditContact ...
@@ -31,7 +49,9 @@ func (d *Db) DeleteContact(id int) (int64, error) {
 	d.Conn()
 	defer d.db.Close()
 
-	stmt, err := d.db.Prepare("DELETE user where id=?")
+	d.VerifiqueConnection()
+
+	stmt, err := d.db.Prepare("DELETE FROM user WHERE id=?")
 	if err != nil {
 		return 0, err
 	}
@@ -47,4 +67,11 @@ func (d *Db) DeleteContact(id int) (int64, error) {
 	}
 
 	return qtd, nil
+}
+
+// VerifiqueConnection ...
+func (d Db) VerifiqueConnection() {
+	if err := d.db.Ping(); err != nil {
+		fmt.Printf("Error => %v", err)
+	}
 }
