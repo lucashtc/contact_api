@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -14,16 +15,21 @@ var d struct {
 
 // Create contact ...
 func Create(w http.ResponseWriter, r *http.Request) {
-	c := []app.Contact{}
-	c[1].Person.Name = "Alguem"
-	c[2].Person.Name = "Eu mesmo"
+
+	var c []app.Contact
+
+	//Json deve ser um array
+	err := json.NewDecoder(r.Body).Decode(&c)
+	if err != nil {
+		fmt.Printf("Error ao decodificar json %v => ", err)
+	}
 
 	qtd, err := d.CreateContact(c)
 	if err != nil {
 		fmt.Printf("Error %v", err)
 	}
+	fmt.Fprintf(w, "resultado: '%v'", qtd)
 
-	fmt.Fprintf(w, "resultado: '%d'", qtd)
 }
 
 // GetContact ...

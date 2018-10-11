@@ -2,10 +2,10 @@ package app
 
 // Contact ...
 type Contact struct {
-	Number string
-	Person person
+	Number string `json:"Number"`
+	Person person `json:"Person`
 }
 
 type person struct {
-	Name string
+	Name string `json:"Name"`
 }

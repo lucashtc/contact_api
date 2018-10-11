@@ -25,13 +25,15 @@ func (d *Db) CreateContact(c []app.Contact) (int64, error) {
 	var qtdCreated int64
 	qtdCreated = 0
 
-	d.db.Prepare("INSERT INTO user(nome) VALUE(?)")
-
+	stmt, err := d.db.Prepare("INSERT INTO user(nome) VALUE(?)")
+	if err != nil {
+		return 0, fmt.Errorf("Falha ao prepara %v => ", err)
+	}
 	for _, v := range c {
 
-		res, err := d.db.Exec(v.Person.Name)
+		res, err := stmt.Exec(v.Person.Name)
 		if err != nil {
-			return 0, fmt.Errorf("Falha ao inserir %v", err)
+			return 0, fmt.Errorf("Falha ao inserir %v => ", err)
 		}
 		qtd, _ := res.RowsAffected()
 		qtdCreated += qtd
